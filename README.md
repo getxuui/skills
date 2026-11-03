@@ -1,6 +1,6 @@
 # xuui skills
 
-Agent skills for [xuui](https://xuui.com), a local canvas for presenting, comparing and reviewing the UI your coding agent builds.
+Agent skills for [xuui](https://xuui.com), a local canvas for presenting, comparing and reviewing the UIs your coding agents build.
 
 ```sh
 npx skills add getxuui/skills
