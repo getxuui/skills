@@ -23,9 +23,9 @@ When alternatives are requested, state the design question, name the primary var
 
 Put the design and its adapter beside the study's registration, following the existing studies. Add the study to the central registry, or extend the relevant existing study when the work explores the same question.
 
-- Use the product terms **study**, **variant**, **canvas**, **layer**, and **guide**. The code contract currently calls variants `iterations` and uses `defineProject` for a study.
+- Use the product terms **study**, **variant**, **canvas**, **layer**, and **guide**. Register a study with `defineStudy` and list its `variants`.
 - Give each variant a stable, descriptive ID unique across all registered studies. Add a new ID when advancing a direction that should remain reviewable. Preserve the earlier implementation; sharing a mutable component does not freeze its history.
-- Write a useful name, description, and rationale. Record real `parentIds` and `informedBy` references when a variant descends from earlier work or submitted feedback.
+- Write a useful name, description, and rationale for each variant.
 - Register ordinary React components. xuui supplies navigation, panning, zoom, inspection, comparison, and comments; the study supplies the design and the providers or data it needs.
 - Scope the study's CSS so it cannot restyle studio chrome or unrelated variants. Give the design meaningful dimensions; a percentage width without a sized containing block can collapse on the canvas.
 - Expose only useful, functioning parameters through `controls`. Wire props, state, and any finite-state machine through `StudioBindings`; changing a control must change the rendered design. Add `data-xuui-layer-name` where the DOM alone gives an unhelpful layer name.
