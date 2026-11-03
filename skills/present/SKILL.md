@@ -5,7 +5,15 @@ description: Shows the React UI you're working on in xuui, so the person can com
 
 # Present in xuui
 
-Turn the work in the current conversation into a running, reviewable xuui study. The handoff is a verified local URL, a short explanation of the design question, and the differences worth reviewing.
+Turn the work in the current conversation into a running, reviewable xuui study. The handoff is a verified local URL, a short explanation of the design question, and the differences worth reviewing. After the handoff, keep listening for the person's review.
+
+## Stay in xuui
+
+xuui is the presentation surface for this work. Once a design is in xuui, keep presenting it there.
+
+- When another skill or workflow is also in play, use its method for choosing directions, but build the directions as xuui variants. Never build its picker, a switcher inside the application, or a separate preview page.
+- "Show it in the whole page", "in the site" or "in context" means a larger xuui study: render the surrounding page or layout around the design, with the same variants.
+- Change the real application only when the person asks to implement or ship a direction. Keep the study, so the choice stays reviewable.
 
 ## Resolve what to present
 
@@ -28,7 +36,17 @@ Put the design and its adapter beside the study's registration, following the ex
 - Write a useful name, description, and rationale for each variant.
 - Register ordinary React components. xuui supplies navigation, panning, zoom, inspection, comparison, and comments; the study supplies the design and the providers or data it needs.
 - Scope the study's CSS so it cannot restyle studio chrome or unrelated variants. Give the design meaningful dimensions; a percentage width without a sized containing block can collapse on the canvas.
-- Expose only useful, functioning parameters through `controls`. Wire props, state, and any finite-state machine through `StudioBindings`; changing a control must change the rendered design. Add `data-xuui-layer-name` where the DOM alone gives an unhelpful layer name.
+- Add `data-xuui-layer-name` where the DOM alone gives an unhelpful layer name.
+
+## Expose states and controls
+
+The sidebar shows the controls a variant declares, and the reviewer comments on whatever is rendered. Choose the kind of control that matches the design:
+
+- **`machine`** for the design's distinct states and the events that move between them: empty, loading, loaded and error; closed and open; the steps of a form or flow. The reviewer can jump to any state from the sidebar and follow the transitions in Play mode, so each state can be judged and commented on. Name states and events the way the product does. Render from `machine.value`, and wire the design's real interactions to `machine.send(event)`, so clicking in Play mode follows the same machine.
+- **`state`** for independent values the design reacts to, such as a favourited toggle or an item count.
+- **`props`** for design parameters worth comparing, such as copy, radius or width.
+
+When the design has meaningful states beyond the happy path, expose them with a machine rather than presenting one state. Don't invent states the design doesn't have. Expose only controls that change the rendered design, and check every state renders. See the installed `docs/authoring.md` for the exact shape.
 
 Keep changes to the requested study and the registration needed to present it. A presentation request does not authorize redesigning the studio itself.
 
@@ -51,8 +69,15 @@ Done means the link opens the intended design, meaningful interactions work, and
 
 ## Hand off
 
-Return the focused link, plus a comparison link when useful. Explain what to judge in a few sentences and name material limitations such as mocked data. The reviewer uses Play for interactions, C for comments, and Submit review for the handoff.
+Return the focused link, plus a comparison link when useful. Explain what to judge in a few sentences and name material limitations such as mocked data. The reviewer uses Play for interactions, C for comments, and Submit review for the handoff. End by saying you're listening for their review and they can keep chatting meanwhile.
 
 For alternatives, add a short table of what changed, when each direction fits, and its main cost. State the reviewed width and state. Do not silently pick a winner. When asked to advance a choice, verify the promoted design in its source context and retain its reviewable study; preserve old implementations and add stable IDs for further comparable work.
 
-Stop after presenting unless the user also asks to wait for feedback or continue the review loop. In that case, discover the xuui MCP tools, filter to the presented study, read each complete submitted package, and acknowledge receipt before acting on it. A receipt means the package was read; it does not mean its requests were implemented. Browser drafts are not submitted feedback. If MCP is unavailable, use the submitted files or the reviewer's copied package; change host configuration only when setup was requested.
+## Listen for feedback
+
+After the handoff, wait for the review without being asked.
+
+- If the xuui MCP tools are available, call `xuui_wait_for_review` with the study's `studyId`. Each call returns within 50 seconds. Call it again with the returned `knownReviewIds` until a review arrives or the person asks you to stop.
+- If they aren't available, the workspace's MCP server isn't connected. Offer to connect it, following the installed `docs/mcp.md`, and say if the host needs a restart to load it. Until then, if your host can run a background command that notifies you when it finishes, use one to wait for a new file in `.xuui/reviews/`. Otherwise, ask the person to tell you when they've submitted.
+
+When a review arrives, read the complete package, then acknowledge it with `xuui_acknowledge_review`. A receipt means you read it, not that its requests are done. Browser drafts are not submitted feedback. Act on the comments: make changes as new variants with new IDs, verify them, hand off the new links, and listen again.
