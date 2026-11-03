@@ -1,6 +1,6 @@
 ---
 name: present
-description: Present React UI in xuui as a runnable study with reviewable variants. Use for /present or requests to present work in the local xuui studio.
+description: Shows the React UI you're working on in xuui, so the person can compare variants side by side and comment on them. Use when someone types /present or asks to show, compare or review UI in xuui.
 ---
 
 # Present in xuui
