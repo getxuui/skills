@@ -21,7 +21,7 @@ Use the requested UI, reference, or recent work as the brief. Present an existin
 
 Find the study workspace from the current project: an installed workspace has `xuui.studies.ts` and a local xuui dependency. Read that version's README, `docs/authoring.md`, and exported types, plus a nearby registration. Use the installed CLI rather than downloading a newer alpha into an existing workspace. A xuui source checkout instead uses `examples/studies.ts`, `src/xuui/model.ts`, and `src/xuui/parameters.ts`; read `CONTEXT.md` there. Do not infer the consumer workspace by walking upward from an installed skill.
 
-The alpha presents registered React components in a standalone workspace. If a new workspace is needed, run `npx --package @getxuui/xuui@0.1.0-alpha.2 xuui init <directory>`, then use its pinned installation. For work from another codebase, inspect its tokens, neighboring UI, responsive constraints, providers, and data. Adapt the relevant component and necessary dependencies without silently redesigning it. Include a context wrapper when isolation would distort the review, and disclose mocked data or unavailable backend behavior.
+The alpha presents registered React components in a standalone workspace. If a new workspace is needed, run `npx --package @getxuui/xuui@0.1.0-alpha.3 xuui init <directory>`, then use its pinned installation. For work from another codebase, inspect its tokens, neighboring UI, responsive constraints, providers, and data. Adapt the relevant component and necessary dependencies without silently redesigning it. Include a context wrapper when isolation would distort the review, and disclose mocked data or unavailable backend behavior.
 
 ## Frame an exploration
 
@@ -33,6 +33,7 @@ Put the design and its adapter beside the study's registration, following the ex
 
 - Use the product terms **study**, **variant**, **canvas**, **layer**, and **guide**. Register a study with `defineStudy` and list its `variants`.
 - Give each variant a stable, descriptive ID unique across all registered studies. Add a new ID when advancing a direction that should remain reviewable. Preserve the earlier implementation; sharing a mutable component does not freeze its history.
+- When the installed version supports history (alpha.3 onward), set `from` to the parent variant IDs and `answers` to the submitted comment IDs the new variant addresses. The All view uses that lineage to arrange the study. Optional `labels` hold up to three short tags in the person's words, such as "Shipped"; xuui gives them no status or ranking. Follow the installed authoring docs and types for the exact shape.
 - Write a useful name, description, and rationale for each variant.
 - Register ordinary React components. xuui supplies navigation, panning, zoom, inspection, comparison, and comments; the study supplies the design and the providers or data it needs.
 - Scope the study's CSS so it cannot restyle studio chrome or unrelated variants. Give the design meaningful dimensions; a percentage width without a sized containing block can collapse on the canvas.
