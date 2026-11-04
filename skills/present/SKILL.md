@@ -38,6 +38,7 @@ Put the design and its adapter beside the study's registration, following the ex
 - Register ordinary React components. xuui supplies navigation, panning, zoom, inspection, comparison, and comments; the study supplies the design and the providers or data it needs.
 - Scope the study's CSS so it cannot restyle studio chrome or unrelated variants. Give the design meaningful dimensions; a percentage width without a sized containing block can collapse on the canvas.
 - Add `data-xuui-layer-name` where the DOM alone gives an unhelpful layer name.
+- When aligning a design by a grid, declare that grid on the variant if the installed types support `grids`. Use pixel spacing for a spacing system and column or row grids for layout alignment. Follow the installed authoring docs for custom size, count, gutter and margin fields, then verify the overlay matches the design.
 
 ## Expose states and controls
 
