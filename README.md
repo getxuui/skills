@@ -12,6 +12,10 @@ npx skills add getxuui/skills
 
 Requires Node 22.12 or newer. See the [agent guide](https://xuui.com/agents.md) for setup and the MCP connection.
 
+## Contributing
+
+Use [Conventional Commits](CONTRIBUTING.md) for commits and pull request titles. Run `npm ci` after cloning to enable local commit message validation.
+
 ## License
 
 MIT
