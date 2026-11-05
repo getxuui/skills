@@ -29,6 +29,22 @@ When alternatives are requested, state the design question, name the primary var
 
 ## Register the study
 
+### Announce a new variant
+
+Before building a new variant in an existing study, register the in-progress direction with a stable ID and a meaningful name describing the design, such as "Paper, refined". Use that name from the start and retain it when registering the finished component. When `xuui_report_variant_progress` is available, call it with `status: "working"`, `studyId`, `variantId`, the required `name`, and the parent variant IDs in `from`. Optional `width` and `height` set the loading artboard's size in CSS pixels. The reviewer sees the named direction with a small spinner in the sidebar and above its dot-grid artboard in All, while keeping their current view and comments.
+
+Without that MCP tool, check whether the installed CLI's `--help` lists `progress`. If it does, run from the study workspace:
+
+```sh
+npx --no-install xuui progress --study <study-id> --variant <new-variant-id> --name "Refined spacing" --from <parent-variant-id>
+```
+
+Repeat `--from` for multiple parents; omit it for an independent direction. Use `--width` and `--height` when the design's dimensions are known. In a source checkout, use `node src/cli.ts progress` with the same arguments. Older installations without this capability can continue presenting variants; say that live progress is unavailable rather than upgrading the workspace silently.
+
+Register the finished component with the **same variant ID** and parents. It replaces the loading artboard automatically. After verifying it, report `status: "done"` with `studyId` and `variantId`, or run `npx --no-install xuui progress --study <study-id> --variant <new-variant-id> --done`. Clear the signal the same way when abandoning a variant. Let the workspace apply updates in place; preserve the reviewer's browser session and comment drafts.
+
+### Add the registration
+
 Put the design and its adapter beside the study's registration, following the existing studies. Add the study to the central registry, or extend the relevant existing study when the work explores the same question.
 
 - Use the product terms **study**, **variant**, **canvas**, **layer**, and **guide**. Register a study with `defineStudy` and list its `variants`.
