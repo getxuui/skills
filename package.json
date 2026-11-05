@@ -1,0 +1,17 @@
+{
+  "name": "@getxuui/skills",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "commitlint": "commitlint"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "husky": "^9.1.7"
+  }
+}
